@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Property List</h1>
+  <ul>
+    {% for property in properties %}
+      <li>
+        {{ property.title }}
+        <button class="like-button" data-property-id="{{ property.id }}">Like ({{ property.likes }})</button>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <script>
+    $(document).ready(function() {
+      $('.like-button').click(function() {
+        var propertyId = $(this).data('property-id');
+        $.ajax({
+          type: 'GET',
+          url: 'http://localhost:8000/api/likeproperty',
+          data: {
+            id: propertyId
+          },
+          success: function(data) {
+            $(this).text('Like (' + data.likes + ')');
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}

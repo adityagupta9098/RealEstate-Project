@@ -1,0 +1,72 @@
+
+<form method="get" action="http://localhost:8000/api/filterproperties">
+    <label for="bedrooms">Number of Bedrooms:</label>
+    <select id="bedrooms" name="bedrooms">
+        <option value="">Any</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <label for="state">State:</label>
+    <select id="state" name="state">
+        <option value="">Any</option>
+        {% for state in states %}
+            <option value="{{ state }}">{{ state }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="city">City:</label>
+    <select id="city" name="city">
+        <option value="">Any</option>
+        {% for city in cities %}
+            <option value="{{ city }}">{{ city }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="area">Area:</label>
+    <select id="area" name="area">
+        <option value="">Any</option>
+        {% for area in areas %}
+            <option value="{{ area }}">{{ area }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Apply Filters</button>
+</form>
+
+
+
+
+{% for property in properties %}
+    <div class="property">
+        <h2>{{ property.title }}</h2>
+        <p>{{ property.description }}</p>
+        <p>Bedrooms: {{ property.bedrooms }}</p>
+        <p>State: {{ property.state }}</p>
+        <p>City: {{ property.city }}</p>
+        <p>Area: {{ property.area }}</p>
+    </div>
+{% endfor %}
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row">
+    {% for property in properties %}
+      <div class="col-md-4">
+        <div class="card">
+          <img src="{{ property.image.url }}" class="card-img-top" alt="{{ property.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ property.title }}</h5>
+            <p class="card-text">{{ property.description }}</p>
+            <a href="//localhost/api/sellerdetail" class="btn btn-primary">I Am Interested</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
